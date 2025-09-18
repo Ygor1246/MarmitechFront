@@ -58,6 +58,28 @@ export class UsuariolistComponent {
   }
 
   deleteById(usuario: Usuario) {
+    if (!usuario.id){
+      Swal.fire({
+        title: 'Usuário sem ID',
+    
+        icon: 'warning',
+      confirmButtonText: 'Fechar',
+     
+      cancelButtonText: 'Cancelar'
+      });
+      return;
+    } else {
+       Swal.fire({
+        title: 'Você tem certeza?',
+        icon: 'warning',
+       
+        confirmButtonText: 'Sim, deletar!',
+        cancelButtonText: 'Cancelar',  
+       });
+    }/*.then((result) => {
+     if (result.isConfirmed) {
+        //let indice = this.lista.findIndex((c) => {*/
+
     Swal.fire({
       title: 'Você tem certeza?',
       icon: 'warning',
@@ -102,15 +124,34 @@ export class UsuariolistComponent {
     this.modalRef = this.modalService.open(this.modalUsuariosDetalhe);
   }
   editById(usuario: Usuario) {
-    this.usuarioEdit = Object.assign({}, usuario);
+    this.usuarioEdit = Object.assign({}, usuario); //clonando pra evitar referencia de objeto
     this.modalRef = this.modalService.open(this.modalUsuariosDetalhe);
   }
   retornoDetalhes(usuario: Usuario) {
-    /*  if(usuario > 0) {
-        let indice = this.lista.findIndex((c =>{ return c.id === usuario.id});
+    if(usuario.id > 0) {
+        let indice = this.lista.findIndex((c) => c.id === usuario.id);
         this.lista[indice] = usuario;
+        Swal.fire({ 
+          title: 'Atualizado com sucesso!',
+          icon: 'success',
+          confirmButtonText: 'OK',
+           showConfirmButton: true,
+      showDenyButton: true,
+        });
+    }else {
+      this.lista.push(usuario);
+      Swal.fire({
+        title: 'Cadastrado com sucesso!',
+        icon: 'success',
+        confirmButtonText: 'OK',
+         showConfirmButton: true,
+      showDenyButton: true,
+       
+      });
+
+      
     }
-     */
+     
     this.modalRef.close();
   }
 }
