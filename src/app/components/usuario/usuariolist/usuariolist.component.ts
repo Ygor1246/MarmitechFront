@@ -129,29 +129,38 @@ export class UsuariolistComponent {
   }
   retornoDetalhes(usuario: Usuario) {
     if(usuario.id > 0) {
-        let indice = this.lista.findIndex((c) => c.id === usuario.id);
-        this.lista[indice] = usuario;
-        Swal.fire({ 
-          title: 'Atualizado com sucesso!',
-          icon: 'success',
-          confirmButtonText: 'OK',
-           showConfirmButton: true,
-      showDenyButton: true,
-        });
-    }else {
+        //let indice = this.lista.findIndex((c) => c.id === usuario.id);
+       // this.lista[indice] = usuario;
+
+     this.usuarioService.update(usuario).subscribe({
+            next: () => {
+              Swal.fire({
+                title: 'Sucesso!',
+                text: 'Cliente atualizado com sucesso.',
+                icon: 'success',
+                confirmButtonText: 'OK',
+              });
+              this.modalRef.close();
+            },
+            error: (err) => {
+              Swal.fire({
+                title: 'Erro ao atualizar usuário',
+                text: err.message,
+                icon: 'error',
+                confirmButtonText: 'Fechar',
+              });
+            }
+     });
+    } else {
       this.lista.push(usuario);
       Swal.fire({
         title: 'Cadastrado com sucesso!',
         icon: 'success',
         confirmButtonText: 'OK',
-         showConfirmButton: true,
-      showDenyButton: true,
-       
+        showConfirmButton: true,
+        showDenyButton: true,
       });
-
-      
+      this.modalRef.close();
     }
-     
-    this.modalRef.close();
   }
 }
