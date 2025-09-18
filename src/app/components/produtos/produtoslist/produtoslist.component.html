@@ -1,0 +1,73 @@
+<br />
+<div class="container">
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card">
+        <div class="card-body">
+          <h3>Produtos</h3>
+
+          <div class="direita">
+            <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="new()">
+              Novo
+            </button>
+
+            <!-- <button
+              type="button"
+              class="btn btn-primary btn-rounded"
+              mdbRipple
+              [routerLink]="['/admin/produtos/new']"
+            >
+              Novo
+            </button> -->
+          </div>
+          <br />
+          <table class="table table-striped">
+            <thead>
+              <tr class="centralizar">
+                <th>SKU</th>
+                <th>Nome</th>
+                <th>Descrição</th>
+                <th>Categoria</th>
+                <th>Preço</th>
+                <th>Estoque</th>
+                <th>Data Cadastro</th>
+                <th>Ações</th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (produto of lista; track $index) {
+              <tr>
+                <td>{{ produto.sku }}</td>
+                <td>{{ produto.nome }}</td>
+                <td>{{ produto.descricao }}</td>
+                <td>{{ produto.categoria }}</td>
+                <td>{{ produto.precoUnitario }}</td>
+                <td>{{ produto.estoque }}</td>
+                <td>{{ produto.dataCadastro }}</td>
+                <td class="direita">
+                  <button type="button" class="btn btn-primary btn-rounded" mdbRipple (click)="editById(produto)">
+                    Editar
+                  </button>
+                  <button type="button" class="btn btn-danger btn-rounded" mdbRipple (click)="deleteById(produto)">
+                    Deletar
+                  </button>
+                </td>
+              </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #modalProdutoDetalhe>
+  <div class="modal-header">
+    <h5 class="modal-title" id="exampleModalLabel">Cadastro de Produto</h5>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modalRef.close()"></button>
+  </div>
+  <div class="modal-body">
+    <app-produtosdetails [produto]="produtoEdit" (retorno)="retornoDetalhe($event)"></app-produtosdetails>
+  </div>
+</ng-template>
